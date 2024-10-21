@@ -1,5 +1,6 @@
 import math
 import tkinter
+import pygame
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -29,7 +30,7 @@ class PomodoroApp:
                                      bg=YELLOW, highlightthickness=0)
 
         tomato_img = tkinter.PhotoImage(file="tomato.png")
-        self.canvas.create_image(100, 112, image=tomato_img)
+        self.canvas.create_image(0, 0, image=tomato_img, anchor='nw')
         self.timer_txt = self.canvas.create_text(
             100, 130, fill="white", text="00:00", font=(FONT_NAME, 35, "bold"))
         self.canvas.grid(row=1, column=1, pady=20)
@@ -53,6 +54,10 @@ class PomodoroApp:
             text="Resetar", highlightthickness=0, command=self.reset_timer)
         bt_reset.grid(row=2, column=2)
 
+        # Loads notify sound
+        pygame.mixer.init()
+        pygame.mixer.music.load('./sound.wav')
+
         self.window.mainloop()
 
     # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -70,6 +75,8 @@ class PomodoroApp:
             next_count = WORK_MIN * 60 if not self.is_paused else self.last_count
             self.lbl_title.config(text="Foque!", fg=GREEN)
 
+        self.play_alarm_sound()
+        self.window.focus_force()
         self.count_down(next_count)
         self.bt_start.grid_remove()
         self.bt_stop.grid()
@@ -109,6 +116,11 @@ class PomodoroApp:
         else:
             self.last_count = count
             self.start_timer()
+
+    @staticmethod
+    def play_alarm_sound():
+        pygame.mixer.music.play()
+
 
 if __name__ == "__main__":
     app = PomodoroApp()
