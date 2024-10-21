@@ -7,9 +7,9 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
-SHORT_BREAK_MIN = 1
-LONG_BREAK_MIN = 2
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 30
 
 
 class PomodoroApp:
@@ -88,6 +88,8 @@ class PomodoroApp:
         self.lbl_check.config(text="")
         self.canvas.itemconfig(self.timer_txt, text="00:00")
         self.window.after_cancel(self.timer)
+        self.is_paused = False
+        self.last_count = 0
         self.reps = 0
 
     # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
