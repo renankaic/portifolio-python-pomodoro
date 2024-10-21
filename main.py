@@ -23,10 +23,10 @@ class PomodoroApp:
 
         self.window = tkinter.Tk()
         self.window.title("Pomodoro")
-        self.window.config(padx=100, pady=50, bg=YELLOW)
+        self.window.config(bg=YELLOW, padx=20, pady=20)
 
         self.canvas = tkinter.Canvas(width=
-                                     250, height=250,
+                                     220, height=223,
                                      bg=YELLOW, highlightthickness=0)
 
         tomato_img = tkinter.PhotoImage(file="tomato.png")
@@ -37,21 +37,21 @@ class PomodoroApp:
 
         self.lbl_title = tkinter.Label(text="Timer", fg=GREEN, font=(
             FONT_NAME, 42, "normal"), bg=YELLOW)
-        self.lbl_title.grid(row=0, column=1)
+        self.lbl_title.grid(row=0, column=0, columnspan=3)
 
         self.lbl_check = tkinter.Label(fg=GREEN, bg=YELLOW)
         self.lbl_check.grid(row=3, column=1)
 
         self.bt_start = tkinter.Button(
-            text="Iniciar", highlightthickness=0, command=self.start_timer)
+            text="Iniciar", highlightthickness=0, command=self.start_timer, width=20)
         self.bt_start.grid(row=2, column=0)
 
-        self.bt_stop = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer)
+        self.bt_stop = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer, width=20)
         self.bt_stop.grid(row=2, column=0)
         self.bt_stop.grid_remove()
 
         bt_reset = tkinter.Button(
-            text="Resetar", highlightthickness=0, command=self.reset_timer)
+            text="Resetar", highlightthickness=0, command=self.reset_timer, width=20)
         bt_reset.grid(row=2, column=2)
 
         # Loads notify sound
