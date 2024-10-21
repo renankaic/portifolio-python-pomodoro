@@ -42,16 +42,19 @@ class PomodoroApp:
         self.lbl_check = tkinter.Label(fg=GREEN, bg=YELLOW)
         self.lbl_check.grid(row=3, column=1)
 
+        icon_play = tkinter.PhotoImage(file='assets/icons/icon-play.png')
         self.bt_start = tkinter.Button(
-            text="Iniciar", highlightthickness=0, command=self.start_timer, width=20)
+            text="Iniciar", highlightthickness=0, command=self.start_timer, width=100, pady=5, image=icon_play, compound='top')
         self.bt_start.grid(row=2, column=0)
 
-        self.bt_stop = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer, width=20)
-        self.bt_stop.grid(row=2, column=0)
-        self.bt_stop.grid_remove()
+        icon_pause = tkinter.PhotoImage(file='assets/icons/icon-pause.png')
+        self.bt_pause = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer, width=100, pady=5, image=icon_pause, compound='top')
+        self.bt_pause.grid(row=2, column=0)
+        self.bt_pause.grid_remove()
 
+        icon_reset = tkinter.PhotoImage(file='assets/icons/icon-reset.png')
         bt_reset = tkinter.Button(
-            text="Resetar", highlightthickness=0, command=self.reset_timer, width=20)
+            text="Resetar", highlightthickness=0, command=self.reset_timer, width=100, pady=5, image=icon_reset, compound='top')
         bt_reset.grid(row=2, column=2)
 
         # Loads notify sound
@@ -79,12 +82,12 @@ class PomodoroApp:
         self.window.focus_force()
         self.count_down(next_count)
         self.bt_start.grid_remove()
-        self.bt_stop.grid()
+        self.bt_pause.grid()
 
     def pause_timer(self):
         self.window.after_cancel(self.timer)
         self.reps -= 1
-        self.bt_stop.grid_remove()
+        self.bt_pause.grid_remove()
         self.bt_start.grid()
         self.is_paused = True
         self.lbl_title.config(text='Pausado!', fg=GREEN)
