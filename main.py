@@ -7,17 +7,17 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 2
-SHORT_BREAK_MIN = 1
-LONG_BREAK_MIN = 4
-
-reps = 0
-timer = None
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 30
 
 
 class PomodoroApp:
     def __init__(self) -> None:
         # ---------------------------- UI SETUP ------------------------------- #
+        self.reps = 0
+        self.timer = None
+
         self.window = tkinter.Tk()
         self.window.title("Pomodoro")
         self.window.config(padx=100, pady=50, bg=YELLOW)
@@ -49,13 +49,12 @@ class PomodoroApp:
 
     # ---------------------------- TIMER MECHANISM ------------------------------- #
     def start_timer(self):
-        global reps
-        reps += 1
+        self.reps += 1
 
-        if reps % 8 == 0:
+        if self.reps % 8 == 0:
             self.count_down(LONG_BREAK_MIN * 60)
             self.lbl_title.config(text="Break", fg=RED)
-        elif reps % 2 == 0:
+        elif self.reps % 2 == 0:
             self.count_down(SHORT_BREAK_MIN * 60)
             self.lbl_title.config(text="Break", fg=PINK)
             self.lbl_check.config(text=self.lbl_check.cget("text") + "✔")
@@ -70,8 +69,7 @@ class PomodoroApp:
         self.canvas.itemconfig(self.timer_txt, text="00:00")
         self.window.after_cancel(timer)
 
-        global reps
-        reps = 0
+        self.reps = 0
 
     # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
