@@ -1,6 +1,12 @@
+import os
+import sys
+
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
 import math
 import tkinter
 import pygame
+
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -11,6 +17,14 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 30
+
+
+# Função para buscar os arquivos no modo executável e no modo de desenvolvimento
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    else:
+        return os.path.join(os.path.abspath("."), relative_path)
 
 
 class PomodoroApp:
@@ -29,7 +43,7 @@ class PomodoroApp:
                                      220, height=223,
                                      bg=YELLOW, highlightthickness=0)
 
-        tomato_img = tkinter.PhotoImage(file="tomato.png")
+        tomato_img = tkinter.PhotoImage(file=resource_path("./assets/img/tomato.png"))
         self.canvas.create_image(0, 0, image=tomato_img, anchor='nw')
         self.timer_txt = self.canvas.create_text(
             100, 130, fill="white", text="00:00", font=(FONT_NAME, 35, "bold"))
@@ -42,24 +56,27 @@ class PomodoroApp:
         self.lbl_check = tkinter.Label(fg=GREEN, bg=YELLOW)
         self.lbl_check.grid(row=3, column=1)
 
-        icon_play = tkinter.PhotoImage(file='assets/icons/icon-play.png')
+        icon_play = tkinter.PhotoImage(file=resource_path('./assets/icons/icon-play.png'))
         self.bt_start = tkinter.Button(
-            text="Iniciar", highlightthickness=0, command=self.start_timer, width=100, pady=5, image=icon_play, compound='top')
+            text="Iniciar", highlightthickness=0, command=self.start_timer, width=100, pady=5, image=icon_play,
+            compound='top')
         self.bt_start.grid(row=2, column=0)
 
-        icon_pause = tkinter.PhotoImage(file='assets/icons/icon-pause.png')
-        self.bt_pause = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer, width=100, pady=5, image=icon_pause, compound='top')
+        icon_pause = tkinter.PhotoImage(file=resource_path('./assets/icons/icon-pause.png'))
+        self.bt_pause = tkinter.Button(text="Pausar", highlightthickness=0, command=self.pause_timer, width=100, pady=5,
+                                       image=icon_pause, compound='top')
         self.bt_pause.grid(row=2, column=0)
         self.bt_pause.grid_remove()
 
-        icon_reset = tkinter.PhotoImage(file='assets/icons/icon-reset.png')
+        icon_reset = tkinter.PhotoImage(file=resource_path('./assets/icons/icon-reset.png'))
         bt_reset = tkinter.Button(
-            text="Resetar", highlightthickness=0, command=self.reset_timer, width=100, pady=5, image=icon_reset, compound='top')
+            text="Resetar", highlightthickness=0, command=self.reset_timer, width=100, pady=5, image=icon_reset,
+            compound='top')
         bt_reset.grid(row=2, column=2)
 
         # Loads notify sound
         pygame.mixer.init()
-        pygame.mixer.music.load('./sound.wav')
+        pygame.mixer.music.load(resource_path('./assets/sounds/sound.wav'))
 
         self.window.mainloop()
 
