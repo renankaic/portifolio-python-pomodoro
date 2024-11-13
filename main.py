@@ -14,7 +14,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 30
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 30
 
@@ -132,6 +132,8 @@ class PomodoroApp:
         self.canvas.itemconfig(
             self.timer_txt, text=f"{count_minutes}:{count_seconds}")
         if count > 0:
+            if self.timer:
+                self.window.after_cancel(self.timer)
             self.timer = self.window.after(1000, self.count_down, count - 1)
         else:
             self.last_count = count
